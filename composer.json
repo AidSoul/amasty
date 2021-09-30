@@ -1,0 +1,14 @@
+{
+    "name": "test/tasks",
+    "authors": [
+        {
+            "name": "AidSoul",
+            "email": "aidsoul@mail.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Task1\\": "src/Task1"
+        }
+    }
+}
