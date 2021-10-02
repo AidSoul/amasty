@@ -8,7 +8,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Task1\\": "src/Task1"
+            "Task1\\": "src/Task1",
+            "Task2\\": "src/Task2"
         }
     }
 }
