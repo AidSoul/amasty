@@ -13,30 +13,26 @@ class Calculation extends CashMachine
 
     private function bank()
     {
-
-            
-            $this->amount = $_POST['amount'];        
-            $this->parValut=[5,10,20,50,100,200,500];
-            $this->ans[0]=0;
+        $this->amount = $_POST['amount'];
+        $this->parValut=[5,10,20,50,100,200,500];
+        $this->ans[0]=0;
                 
-            for ($m = 1; $m <= $this->amount; ++$m) {
-                $this->ans[$m] = PHP_INT_MAX;
-                for ($i = 0; $i < count($this->parValut); ++$i) {
-                    if ($m >= $this->parValut[$i] &&
+        for ($m = 1; $m <= $this->amount; ++$m) {
+            $this->ans[$m] = PHP_INT_MAX;
+            for ($i = 0; $i < count($this->parValut); ++$i) {
+                if ($m >= $this->parValut[$i] &&
                         $this->ans[$m - $this->parValut[$i]]+1 < $this->ans[$m]) {
-                        $this->ans[$m] = $this->ans[$m-$this->parValut[$i]]+1;
-                    }
+                    $this->ans[$m] = $this->ans[$m-$this->parValut[$i]]+1;
                 }
             }
-  
+        }
     }
 
     private function extradition()
     {
         $this->bank();
         if ($this->ans[$this->amount] == PHP_INT_MAX) {
-           $this->ifNot();
-          
+            $this->ifNot();
         } else {
             while ($this->amount > 0) {
                 for ($i = 0;$i < count($this->parValut); ++$i) {
@@ -48,16 +44,16 @@ class Calculation extends CashMachine
                 }
             }
             $this->message();
-           
         }
     }
 
-    private function ifNot(){
-        $this->go = ['error'=>2];
-        // foreach( $this->go[] as $g){
-        //     if($g)
+    private function ifNot()
+    {
+        $a = str_split($this->amount);
+        // if($a[arr.pop()]){
+
         // }
-       
+        $this->go = ['error'=>2];
     }
 
     private function message()
@@ -81,17 +77,13 @@ class Calculation extends CashMachine
     }
 
     public function getAmount()
-
-    {   
-        if (isset($_POST['amount'])) {     
-            if(!empty($_POST['amount'])){
+    {
+        if (isset($_POST['amount'])) {
+            if (!empty($_POST['amount'])) {
                 $this->extradition();
-                
-            }
-            else{
+            } else {
                 $this->go = ['error'=>1];
             }
-
         }
         return $this->go;
     }
