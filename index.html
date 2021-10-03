@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css" type="text/css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <title>Банкомат</title>
+</head>
+<body>
+    <div class="page">
+        <form id="bankForm" method="POST">
+        <div class="case">
+           
+            <div class="case__item"><h1>Банкомат</h1></div>
+            <div class="case__item"> <label>Номинал в наличии</label></div>
+              
+            <div class="case__item"> <input type="text" value="5,10,20,50,100,200,500" id="par" readonly/></div>
+                <br>
+                <div class="case__item"><label>Ваша сумма</label></div>
+                <div class="case__item"> <input type="text" onkeyup="this.value = this.value.replace(/[^\d]/g,'');" name="amount" id="banknAmount"/></div>
+                <br>
+                <div class="case__item"> 
+                    <input  type="submit" name="ok" id="banknBtn" value="Отправить"/>
+                </div>       
+                <div class="case__item">
+                        <table class="conclusion">
+                            
+                        </table>
+                        <div class="error">
+
+                        </div>
+                </div>
+        </div>
+    </form>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#bankForm').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: 'task3.php',
+                    data: $(this).serialize(),
+                    success: function(response)
+                    {
+
+                        $('.conclusion').html('');
+                        $('.error').html('');
+                        var obj  = JSON.parse(response);
+                        if(obj.error == 1){
+                            $('.error').html('Поле "Ваша сумма" пустое!');
+                        }
+                        else{
+                            if(obj.error == 2){
+                                $('.error').html('Бакомат не может такое выдать');
+                            }
+                            else{
+                                var a = '<tr><td>Номинал</td><td>Количество</td><tr>';
+                        var b;
+                        $.each(obj,function(index,value){
+                            b = b + '<tr><td>' + index + '</td><td>' + value;
+
+                        });
+                        
+                        $('.conclusion').html(a+b);
+                        }
+                            }
+                         
+                  
+                        
+                        console.log(obj);
+                   }
+               });
+             });
+        });
+
+
+
+        </script>
+
+
+</body>
+</html>
