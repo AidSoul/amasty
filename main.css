@@ -56,6 +56,10 @@ table.conclusion{
   width:100%;
   text-align:center;
 }
+.error{
+  font-size: 20px;
+  color: red;
+}
 table.conclusion th{font-weight:normal;font-size:16px; color:#ffffff;background-color:#0f65a3;}
 table.conclusion td{font-size:14px;color:#354251;}
 table.conclusion td,table.conclusion th{white-space:pre-wrap;padding:10px 5px;line-height:13px;vertical-align: middle;border: 1px solid #0f65a3;}
