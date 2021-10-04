@@ -5,10 +5,19 @@ use Task3\CashMachine;
 
 class Calculation extends CashMachine
 {
+    /**
+     * Buffer
+     */
     private array $ans;
+
+    /**
+     * Сумма введенная пользователем
+     */
     private int $amount;
 
-    // выдача
+    /**
+     * Массив для отправки результата
+     */
     private array $go = ['Пусто'];
 
     private function bank()
@@ -28,10 +37,14 @@ class Calculation extends CashMachine
         }
     }
 
+    /**
+     * Выдача купюр
+     */
     private function extradition()
     {
         $this->bank();
         if ($this->ans[$this->amount] == PHP_INT_MAX) {
+            // Ошибка 2
             $this->ifNot();
         } else {
             while ($this->amount > 0) {
@@ -47,13 +60,39 @@ class Calculation extends CashMachine
         }
     }
 
+    /**
+     * Вывод двух ближайших сумм
+     * 
+     */
     private function ifNot()
     {
-        $a = str_split($this->amount);
-        // if($a[arr.pop()]){
+        $numArr = [1,5,10];
+        $numbers = str_split($this->amount);
+        $num = array_pop($numbers);
 
-        // }
-        $this->go = ['error'=>2];
+        // Определяем к какой цифре ближе цифра
+        $n =  array_reduce($numArr, function ($carry, $item) use ($num) {
+            return $item <= $num? max($carry, $item): $carry;
+        });
+  
+            $send = 0;
+            switch($n){
+                case 1:
+                    $a = $this->amount-$num;       
+                break;
+                case 5:
+                    $a = ($this->amount-$num)+5;          
+                break;
+            }
+            if($num > 0){
+            $send = [$a,$a+5];
+            }
+            else {
+                $send = [$a+5];
+            }
+
+
+        $this->go = ['error'=> 2, 'data'=> $send];
     }
 
     private function message()
@@ -82,6 +121,7 @@ class Calculation extends CashMachine
             if (!empty($_POST['amount'])) {
                 $this->extradition();
             } else {
+                  // Ошибка 1
                 $this->go = ['error'=>1];
             }
         }

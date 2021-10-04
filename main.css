@@ -57,8 +57,9 @@ table.conclusion{
   text-align:center;
 }
 .error{
+  padding: 10px;
   font-size: 20px;
-  color: red;
+  color: rgb(231, 83, 83);
 }
 table.conclusion th{font-weight:normal;font-size:16px; color:#ffffff;background-color:#0f65a3;}
 table.conclusion td{font-size:14px;color:#354251;}
